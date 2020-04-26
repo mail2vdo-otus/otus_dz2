@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "testrest-chart.fullname" . }}
+  labels:
+    {{- include "testrest-chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "testrest-chart.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "testrest-chart.selectorLabels" . | nindent 8 }}
+      annotations:
+          checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          env:
+           - name: DATABASE_USER
+             valueFrom:
+               configMapKeyRef:
+                name: testrest-conf
+                key: DATABASE_USER
+           - name: DATABASE_URI
+             valueFrom:
+               configMapKeyRef:
+                 name: testrest-conf
+                 key: DATABASE_URI
+           - name: appStatusMessage
+             valueFrom:
+               configMapKeyRef:
+                  name: testrest-conf
+                  key: appStatusMessage
+           - name: DATABASE_PASSWORD
+#             value: passwd 
+             valueFrom:
+               secretKeyRef:
+                  name: testrest-conf-sec
+                  key: DATABASE_PASSWORD
+          readinessProbe:
+            httpGet:
+             port: 8000
+             path: /version
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+             port: 8000
+             path: /version
+            initialDelaySeconds: 10
+            periodSeconds: 10
+
