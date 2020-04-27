@@ -4,14 +4,15 @@ metadata:
   name: testrest-conf
 data:
  appStatusMessage: helm-1111
-   DATABASE_URI: {{ ( include "postgresql.fullname" .) }}:{{ .Values.postgresql.postgresqlPort }}/{{ .Values.postgresql.postgresqlDatabase }}
-   DATABASE_USER: {{ .Values.postgresql.postgresqlUsername }}
+ DATABASE_URI: {{ ( include "postgresql.fullname" .) }}:{{ .Values.postgresql.service.port }}/{{ .Values.postgresql.postgresqlDatabase }}
+ DATABASE_USER: {{ .Values.postgresql.postgresqlUsername }}
 ---
 apiVersion: v1
 kind: Secret
 metadata:
   name: testrest-conf-sec
+#  namespace: myapp
 type: Opaque
 data:
-  DATABASE_PASSWORD: {{ printf "%s" .Values.postgresql.postgresqlPassword | b64enc }}
- 
+ DATABASE_PASSWORD: {{ printf "%s" .Values.postgresql.postgresqlPassword | b64enc }}
+
