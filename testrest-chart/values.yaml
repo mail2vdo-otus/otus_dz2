@@ -29,5 +29,8 @@ ingress:
     - host: localhost
       paths:
         path: /testrest($|/)(.*)
+    - host: arch.homework
+      paths:
+        path: /otusapp($|/)(.*)
   service:
     port: 80
