@@ -204,7 +204,7 @@
 	{
 	    "id": "9acbb2af-ffb4-480b-bafe-8f5829aaa60b",
 	    "key": "url",
-	    "value": "nginx-nginx-ingress-default-backend.monitoring.svc.cluster.local/testrest",
+	    "value": "nginx-nginx-ingress-controller.monitoring.svc.cluster.local/testrest",
 	    "type": "string"
 	},
 	{
