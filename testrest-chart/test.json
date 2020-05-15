@@ -12,7 +12,13 @@
 	    },
 	    "request": {
 		"method": "GET",
-		"header": [],
+		"header": [
+		    {
+			"key": "Host",
+			"value": "arch.homework",
+			"type": "text"
+		    }
+		],
 		"body": {
 		    "mode": "raw",
 		    "raw": "{\"message\":\"test post\"}"
@@ -52,6 +58,11 @@
 		    {
 			"key": "Content-Type",
 			"value": "application/json",
+			"type": "text"
+		    },
+		    {
+			"key": "Host",
+			"value": "arch.homework",
 			"type": "text"
 		    }
 		],
@@ -96,6 +107,11 @@
 			"key": "Content-type",
 			"value": "application/json",
 			"type": "text"
+		    },
+		    {
+			"key": "Host",
+			"value": "arch.homework",
+			"type": "text"
 		    }
 		],
 		"body": {
@@ -139,6 +155,11 @@
 			"key": "Content-type",
 			"value": "application/json",
 			"type": "text"
+		    },
+		    {
+			"key": "Host",
+			"value": "arch.homework",
+			"type": "text"
 		    }
 		],
 		"body": {
@@ -163,7 +184,13 @@
 	    "name": "alluser",
 	    "request": {
 		"method": "GET",
-		"header": [],
+		"header": [
+		    {
+			"key": "Host",
+			"value": "arch.homework",
+			"type": "text"
+		    }
+		],
 		"url": {
 		    "raw": "http://{{url}}/users",
 		    "protocol": "http",
@@ -202,13 +229,13 @@
     ],
     "variable": [
 	{
-	    "id": "9acbb2af-ffb4-480b-bafe-8f5829aaa60b",
+	    "id": "266c0f79-a2b0-4913-a623-0c32bfbf1351",
 	    "key": "url",
-	    "value": "nginx-nginx-ingress-controller.monitoring.svc.cluster.local/testrest",
+	    "value": "nginx-nginx-ingress-controller.monitoring.svc.cluster.local/otusapp",
 	    "type": "string"
 	},
 	{
-	    "id": "a10a1915-dce7-4505-8e36-9e455fa81971",
+	    "id": "0ce6fd8a-9f99-4986-bc62-4debc1185d97",
 	    "key": "id",
 	    "value": null,
 	    "type": "any"
