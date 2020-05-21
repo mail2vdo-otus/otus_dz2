@@ -6,7 +6,6 @@ replicaCount: 2
 
 image:
   repository: mail2vdo/otus_dz1
-  tag: 1.0.96
   pullPolicy: IfNotPresent
 
 
@@ -19,8 +18,49 @@ postgresql:
   postgresqlUsername: myuser
   postgresqlPassword: passwd
   postgresqlDatabase: myapp
+  persistence:
+    size: 1Gi
   service:
     port: "5432"
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+#      additionalLabels: {}
+#      namespace: monitoring
+    # interval: 30s
+    # scrapeTimeout: 10s
+  ## Custom PrometheusRule to be defined
+  ## The value is evaluated as a template, so, for example, the value can depend on .Release or .Chart
+  ## ref: https://github.com/coreos/prometheus-operator#customresourcedefinitions
+  #prometheusRule:
+#    enabled: false
+
+
+
+#prometheus-postgres-exporter:
+#  config:
+#    datasource:
+#      host:
+#      user: myuser
+    # Only one of password and passwordSecret can be specified
+#      password: passwd
+    # Specify passwordSecret if DB password is stored in secret.
+#      passwordSecret: {}
+    # Secret name
+    #  name:
+    # Password key inside secret
+    #  key:
+      #port: "5432"
+#      database: myapp ''
+      #sslmode: disable
+
+
+#  persistence:
+#    enabled: true
+#    existingClaim: postgresql-claim
+#  volumePermissions:
+#    enabled: true
 
 ingress:
   enabled: true
@@ -33,5 +73,12 @@ ingress:
     - host: arch.homework
       paths:
         path: /otusapp($|/)(.*)
+    - host:
+      paths:
+        path: /testrest($|/)(.*)
   service:
     port: 80
+
+metrics:
+  serviceMonitor:
+    enabled: true

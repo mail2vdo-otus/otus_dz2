@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: testrest-load
+spec:
+  backoffLimit: 1000
+  completions: 1000 # number of times to run
+  parallelism: 10
+  template:
+    spec:
+      containers:
+      - name: testrest-postman
+        image: postman/newman:alpine
+        command: ["sh"]
+        args:
+          - -c
+          - >
+            apk update && apk add --no-cache curl bash && bash -c 
+            " echo \"Running cron loop\";
+
+              while true; 
+
+              do newman run https://raw.githubusercontent.com/mail2vdo-otus/otus_dz2/master/testrest-chart/test.json; sleep 1; done  "
+#
+#         - c
+#         - /bin/bash -c ls
+#      initContainers:
+#      - name: data
+#        image: alpine:latest
+#        command: [ wget https://raw.githubusercontent.com/mail2vdo-otus/otus_dz2/master/testrest-chart/test.json -O home/config.json ]
+      restartPolicy: Never

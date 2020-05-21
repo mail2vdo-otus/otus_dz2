@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: testrest-load-wget
+  labels:
+ 
+spec:
+#  completions: 6 # number of times to run
+#  parallelism: 6
+  template:
+    spec:
+      containers:
+      - name: testrest-wget
+        image: alpine
+        command: ["sh"]
+        args:
+          - -c
+          - >
+            apk update && apk add --no-cache curl bash apache2-utils  && bash -c 
+            " echo \"Running cron loop\";ls;
+
+              while true; 
+
+              do ab -n 20 -c 20 -H \"host:arch.homework\"  http://nginx-nginx-ingress-controller.monitoring.svc.cluster.local/otusapp/requests?sleepMs=100; sleep 1; done
+
+              "
+#        volumeMounts:
+#        - name: config-data
+#          mountPath: /data
+      restartPolicy: Never
+#      volumes:
+#      - name: config-data
+#        hostPath:
+#          path: /var/log
+
+#      initContainers:
+#      - name: data
+#        image: alpine:latest
+#        command: [ wget https://raw.githubusercontent.com/mail2vdo-otus/otus_dz2/master/testrest-chart/test.json -O home/config.json ]
